@@ -983,10 +983,28 @@ export default {
       var buyer = prompt('请输入买家')
       var productId = prompt('请输入所需产品编号')
       var targetAmount = prompt('请输入所需数量')
-      var value = prompt('请输入订单额度')
-      if (buyer == '' || productId == '' || targetAmount == '' || value == '') {
+
+      if (buyer == '' || productId == '' || targetAmount == '') {
         return alert('请填写完整的信息')
       }
+
+      axios
+        .get('http://localhost:8181/getAllProduct')
+        .then(res => {
+          this.tableData_products = res.data //数据传递到页面数组
+        })
+        .catch(err => {
+          console.log('产品数据获取失败' + err)
+        })
+
+      let target = this.tableData_products.find(item => {
+        return item.id == productId
+      })
+
+      if (target == undefined) {
+        return alert('没有该编号的产品')
+      }
+      var value = target.price * targetAmount
 
       axios({
         method: 'post',
@@ -1004,11 +1022,28 @@ export default {
       var buyer = prompt('请输入买家')
       var productId = prompt('请输入所需产品编号')
       var targetAmount = prompt('请输入所需数量')
-      var status = prompt('请输入订单状态')
-      var value = prompt('请输入订单额度')
-      if (buyer == '' || productId == '' || targetAmount == '' || value == '') {
+      if (buyer == '' || productId == '' || targetAmount == '') {
         return alert('请填写完整的信息')
       }
+
+      axios
+        .get('http://localhost:8181/getAllProduct')
+        .then(res => {
+          this.tableData_products = res.data //数据传递到页面数组
+        })
+        .catch(err => {
+          console.log('产品数据获取失败' + err)
+        })
+
+      let target = this.tableData_products.find(item => {
+        return item.id == productId
+      })
+
+      if (target == undefined) {
+        return alert('没有该编号的产品')
+      }
+      var value = target.price * targetAmount
+
       axios({
         method: 'post',
         url: 'http://localhost:8181/updateOrder',
