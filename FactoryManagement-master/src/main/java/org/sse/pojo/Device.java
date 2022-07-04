@@ -18,6 +18,6 @@ public class Device implements Serializable {
 
     private String deviceName;
     private int status;
-    private int productId;
+    private String productId;
 
 }
